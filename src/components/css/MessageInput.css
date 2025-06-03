@@ -1,0 +1,97 @@
+.message-input-bar {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.1rem;
+  background: var(--bg-main);
+  border-top: 1px solid #e5e7eb;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  transition: background 0.3s;
+  gap: 0.7rem;
+}
+
+.version-select {
+  background: rgba(255,255,255,0.13);
+  color: #1a237e;
+  border: none;
+  border-radius: 8px;
+  padding: 0.42rem 1.1rem 0.42rem 0.7rem;
+  font-size: 1.06rem;
+  font-weight: 600;
+  margin-left: 0.7rem;
+  outline: none;
+  box-shadow: 0 2px 8px 0 rgba(30,34,90,0.08);
+  transition: background 0.18s, color 0.18s;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  appearance: none;
+}
+.version-select:focus, .version-select:hover {
+  background: rgba(229,46,113,0.15);
+  color: #8e24aa;
+}
+body.dark .version-select {
+  background: rgba(30,34,90,0.22);
+  color: #fff;
+}
+body.dark .version-select:focus, body.dark .version-select:hover {
+  background: rgba(229,46,113,0.21);
+  color: #ffe;
+}
+
+body.dark .message-input-bar {
+  background: #1e1e1e;
+  border-top: 1px solid #333;
+}
+.message-input {
+  flex: 1 1 auto;
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  outline: none;
+  color: var(--text-main);
+  background: #f1f5f9;
+  margin-right: 0.7rem;
+  transition: background 0.3s, color 0.3s;
+}
+body.dark .message-input {
+  background: #2a2a2a;
+  color: #f8f9fa;
+}
+.send-btn {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+  border: none;
+  color: #fff;
+  font-size: 1.3rem;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+.send-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.send-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+@media (max-width: 576px) {
+  .message-input-bar {
+    padding: 0.5rem 0.5rem;
+  }
+  .message-input {
+    font-size: 1rem;
+    padding: 0.3rem 0.7rem;
+  }
+  .send-btn {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.1rem;
+  }
+}
