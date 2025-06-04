@@ -1,0 +1,76 @@
+/* --- Minimal, Professional Landing Page --- */
+.landing-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 70px); /* Full viewport height minus header */
+  text-align: center;
+  padding: 2rem;
+  background-color: transparent; /* Assuming App.js handles main background */
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+  color: #23232a;
+  transition: color 0.3s;
+}
+
+body.dark .landing-page-container {
+  color: #f0f0f0;
+}
+
+.landing-content {
+  max-width: 600px;
+}
+
+.landing-logo {
+  font-size: 4rem; /* Placeholder logo size */
+  margin-bottom: 1.5rem;
+  color: #e52e71; /* Accent color for logo */
+}
+
+body.dark .landing-logo {
+  color: #fff; /* Or a specific dark mode accent */
+}
+
+.landing-brand {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.landing-welcome {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+body.dark .landing-welcome {
+  color: #ccc;
+}
+
+/* Styles for when MessageInput is centered on the landing page */
+.landing-page-container .message-input-bar {
+  position: relative; /* Override sticky if needed */
+  bottom: auto;
+  max-width: 700px; /* Control width when centered */
+  margin: 0 auto; /* Center it */
+  border-radius: 1.4rem; /* Ensure consistent border-radius */
+  /* Ensure its styles are compatible with being on the landing page */
+}
+
+@media (max-width: 768px) {
+  .landing-logo {
+    font-size: 3rem;
+  }
+  .landing-brand {
+    font-size: 2.5rem;
+  }
+  .landing-welcome {
+    font-size: 1.1rem;
+  }
+  .landing-page-container .message-input-bar {
+    max-width: 90%;
+  }
+}

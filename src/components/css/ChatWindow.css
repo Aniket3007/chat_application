@@ -8,41 +8,118 @@
 }
 .chat-bubble {
   max-width: 70%;
-  margin-bottom: 1.2rem;
+  /* margin-bottom will be handled by the wrapper of bubble + feedback buttons */
   padding: 1.05rem 1.3rem;
   border-radius: 1.3rem;
   font-size: 1.12rem;
   line-height: 1.5;
-  box-shadow: 0 4px 24px rgba(30,34,90,0.10), 0 1.5px 8px rgba(229,46,113,0.06);
+  /* box-shadow and backdrop-filter removed */
   word-break: break-word;
   transition: background 0.3s, color 0.3s, transform 0.18s;
-  backdrop-filter: blur(2.5px);
   position: relative;
   z-index: 1;
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif; /* Font already updated, ensure it stays */
   animation: bubble-fade-in 0.33s cubic-bezier(.45,1.7,.67,1) both;
 }
+
+.chat-bubble.user {
+  background-color: #FFFFFF; /* White for user in light mode */
+  color: var(--text-main); /* Assumes --text-main is black or dark for light mode */
+  margin-left: auto; /* Align user bubbles to the right */
+  border-bottom-right-radius: 0.3rem; 
+}
+
+.chat-bubble.bot {
+  background-color: #f0f0f0; /* Light grey for bot in light mode */
+  color: var(--text-main);
+  margin-right: auto; /* Align bot bubbles to the left */
+  border-bottom-left-radius: 0.3rem;
+}
+
+body.dark .chat-bubble.user {
+  background-color: #2e2e2e; /* Dark grey for user in dark mode */
+  color: var(--text-dark-main); /* Assumes --text-dark-main is light for dark mode */
+}
+
+body.dark .chat-bubble.bot {
+  background-color: #3a3a3a; /* Slightly different dark grey for bot in dark mode */
+  color: var(--text-dark-main);
+}
+
+.message-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem; /* Replaces original .chat-bubble margin-bottom */
+}
+
+.message-item.user-item {
+  align-items: flex-end; /* Aligns bubble and feedback to the right */
+}
+
+.message-item.bot-item {
+  align-items: flex-start; /* Aligns bubble and feedback to the left */
+}
+
+/* Ensure chat-bubble itself doesn't have side margins if message-item handles alignment */
+.chat-bubble.user {
+  margin-left: 0; /* Was auto, now handled by message-item.user-item */
+}
+
+.chat-bubble.bot {
+  margin-right: 0; /* Was auto, now handled by message-item.bot-item */
+}
+
+.feedback-row-outer {
+  margin-top: 0.5rem; /* Space between bubble and feedback buttons */
+  padding: 0 0.5rem; /* Align with bubble padding slightly */
+}
+
 @keyframes bubble-fade-in {
   from { opacity: 0; transform: scale(0.96) translateY(18px); }
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .bubble-content {
-  margin-bottom: 0.25rem;
+  /* Margins can be adjusted here if needed, for now, it's fine as is or empty */
 }
+
 .bubble-meta {
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  margin-top: 2px;
+  font-size: 0.92rem;
+  color: var(--text-muted); /* Use a theme variable for muted text */
+  font-weight: 500;
+  opacity: 0.85;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+  width: 100%;
+  margin-bottom: 0.4rem; /* Space between meta and content below it */
+  /* order: -1; /* This is not needed due to DOM order in JS */
 }
+
+/* For user bubbles, timestamp should be on the right if meta is flex-end */
+.chat-bubble.user .bubble-meta {
+  justify-content: flex-end;
+}
+
+/* For bot bubbles, AI tag could be first or timestamp first */
+.chat-bubble.bot .bubble-meta {
+  justify-content: flex-start; /* Default: timestamp then AI tag */
+}
+
+body.dark .bubble-meta {
+  color: var(--text-dark-muted); /* Use a theme variable for muted text in dark mode */
+}
+
 .bubble-timestamp {
   font-size: 0.87rem;
   color: #7c7c9a;
   opacity: 0.73;
   font-weight: 450;
   letter-spacing: 0.02em;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
 }
+
 .ai-tag {
   font-size: 0.79rem;
   color: #e52e71;
@@ -55,6 +132,7 @@
   text-transform: uppercase;
   opacity: 0.85;
   box-shadow: 0 1px 4px 0 rgba(229,46,113,0.05);
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
 }
 
 .bubble-feedback-row {
@@ -63,35 +141,61 @@
   min-height: 24px;
   display: flex;
   align-items: center;
-  opacity: 0.85;
+  justify-content: center;
+  opacity: 0.92;
   animation: fade-in-feedback 0.5s cubic-bezier(.45,1.7,.67,1);
+  width: 100%;
 }
+
 @keyframes fade-in-feedback {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 0.85; transform: translateY(0); }
 }
 
 .feedback-btns {
-  display: inline-flex;
-  gap: 2px;
-  margin-left: 0.2rem;
+  display: flex;
+  gap: 8px;
   vertical-align: middle;
-  font-size: 1.01rem;
+  font-size: 1.15rem;
+  justify-content: center;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
 }
+
 .feedback-btns.disabled {
   opacity: 0.45;
   pointer-events: none;
 }
+
 .thumb-btn {
+  border: 1.5px solid #e52e71;
   background: none;
-  border: none;
-  font-size: 1.11rem;
-  color: #7c7c9a;
-  padding: 1px 5px;
-  border-radius: 5px;
+  color: #e52e71;
+  border-radius: 50%;
+  width: 2.1rem;
+  height: 2.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.13rem;
   cursor: pointer;
-  transition: background 0.18s, color 0.18s, transform 0.16s;
+  transition: border 0.2s, color 0.2s, background 0.2s;
 }
+.thumb-btn:hover {
+  border: 1.5px solid #23232a;
+  color: #23232a;
+  background: #f9f9f9;
+}
+body.dark .thumb-btn {
+  border: 1.5px solid #e52e71;
+  color: #e52e71;
+  background: none;
+}
+body.dark .thumb-btn:hover {
+  border: 1.5px solid #fff;
+  color: #fff;
+  background: #23232a;
+}
+
 .thumb-btn.up:hover {
   color: #2ecc40;
   background: rgba(46,204,64,0.09);

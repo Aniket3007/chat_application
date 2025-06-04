@@ -38,18 +38,19 @@ function ChatWindow({ messages, streamingWords, onFeedback }) {
                 : "bubble-bot"
             }
           >
-            <div className={`chat-bubble ${msg.sender === "user" ? "user" : "bot"}`}
-            >
-              <div className="bubble-content">{msg.text}</div>
+            <div className={`message-item ${msg.sender === "user" ? "user-item" : "bot-item"}`}>
+              <div className={`chat-bubble ${msg.sender === "user" ? "user" : "bot"}`}>
+                <div className="bubble-meta">
+                  <span className="bubble-timestamp">{formatTime(msg.timestamp || msg.id)}</span>
+                  {msg.sender === "bot" && <span className="ai-tag" title="AI generated content may be incorrect">AI generated</span>}
+                </div>
+                <div className="bubble-content">{msg.text}</div>
+              </div>
               {msg.sender === "bot" && (
-                <div className="bubble-feedback-row">
+                <div className="feedback-row-outer">
                   <FeedbackButtons onFeedback={(fb) => onFeedback && onFeedback(msg.id, fb)} />
                 </div>
               )}
-              <div className="bubble-meta">
-                <span className="bubble-timestamp">{formatTime(msg.timestamp || msg.id)}</span>
-                {msg.sender === "bot" && <span className="ai-tag">AI generated</span>}
-              </div>
             </div>
           </CSSTransition>
         ))}
@@ -68,7 +69,7 @@ function ChatWindow({ messages, streamingWords, onFeedback }) {
               </div>
               <div className="bubble-meta">
                 <span className="bubble-timestamp">{formatTime(Date.now())}</span>
-                <span className="ai-tag">AI generated</span>
+                <span className="ai-tag" title="AI generated content may be incorrect">AI generated</span>
               </div>
             </div>
           </CSSTransition>

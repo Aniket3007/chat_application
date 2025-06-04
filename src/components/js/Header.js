@@ -1,9 +1,24 @@
-import React, { useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { ThemeContext } from "../../themeContext";
 import "../css/Header.css";
 
-function Header({ username }) {
+function Header({ username, onNewSession }) {
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const { theme, toggleTheme } = useContext(ThemeContext);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   return (
     <nav className="header-navbar">
@@ -13,15 +28,20 @@ function Header({ username }) {
       </div>
       <div className="header-actions">
 
-        <button className="new-session-btn" title="Start new session">
-          <span style={{fontWeight:600}}>+ New Session</span>
-        </button>
-        <span className="greeting d-none d-md-inline">
-          Hello, {username}
-        </span>
-        <button
-          className="theme-toggle-btn"
-          onClick={toggleTheme}
+        <div className="user-menu-container" ref={dropdownRef}>
+          <span className="greeting d-none d-md-inline" onClick={() => setDropdownOpen(!isDropdownOpen)} style={{ cursor: 'pointer' }}>
+            Hello, {username} <span className={`dropdown-arrow ${isDropdownOpen ? 'open' : ''}`}>▼</span>
+          </span>
+          {isDropdownOpen && (
+            <div className="dropdown-menu">
+              <button className="dropdown-item new-session-btn-dropdown" onClick={() => { onNewSession(); setDropdownOpen(false); }}>
+                + New Session
+              </button>
+              {/* Theme toggle can also be moved here if desired, or stay separate */}
+            </div>
+          )}
+        </div>
+        <button onClick={toggleTheme} className="theme-toggle-btn" title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
           aria-label="Toggle dark/light mode"
         >
           {theme === "dark" ? "🌙" : "☀️"}

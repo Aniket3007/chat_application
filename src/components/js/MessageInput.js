@@ -17,27 +17,33 @@ function MessageInput({ onSendMessage }) {
 
   return (
     <div className="message-input-bar">
-      <input
+      <textarea
         className="message-input"
-        type="text"
         placeholder="Type your message…"
         value={input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={e => {
+          setInput(e.target.value);
+          e.target.style.height = 'auto';
+          e.target.style.height = (e.target.scrollHeight) + 'px';
+        }}
         onKeyDown={handleKeyDown}
+        rows={1}
+        style={{fontFamily: 'Montserrat, Helvetica, Arial, sans-serif', resize: 'none', minHeight: '2.1rem', maxHeight: '9.2rem'}}
       />
-      <button
-        className="send-btn"
-        onClick={handleSend}
-        disabled={!input.trim()}
-        aria-label="Send"
-      >
-        <span className="send-icon">➤</span>
-      </button>
       <select className="version-select" defaultValue="4.1">
         <option value="4.1">4.1</option>
         <option value="4.2">4.2</option>
         <option value="4.3">4.3</option>
       </select>
+      <button
+        className="send-btn"
+        onClick={handleSend}
+        disabled={!input.trim()}
+        aria-label="Send"
+        style={{fontFamily: 'Montserrat, Helvetica, Arial, sans-serif'}}
+      >
+        <span className="send-icon">➤</span>
+      </button>
     </div>
   );
 }

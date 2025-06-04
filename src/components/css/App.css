@@ -5,8 +5,19 @@
   display: flex;
   flex-direction: column;
   transition: background 0.3s, color 0.3s;
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif; /* Changed font */
   position: relative;
+}
+
+/* Layout for when the landing page is active */
+.app-container.layout-landing {
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+}
+
+/* Layout for when the chat interface is active */
+.app-container.layout-chat {
+  /* Default flex-direction: column is fine */
 }
 .app-container::before {
   content: "";
@@ -25,7 +36,8 @@
   100% { opacity: 0.21; }
 }
 
-.chat-main {
+/* Ensure .chat-main only applies when in chat layout */
+.layout-chat .chat-main {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;

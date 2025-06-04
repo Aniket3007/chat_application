@@ -1,3 +1,4 @@
+/* --- Minimal, Professional Header --- */
 .header-navbar {
   position: sticky;
   top: 0;
@@ -6,13 +7,180 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2.5rem;
-  background: linear-gradient(90deg, #e52e71 0%, #1a237e 60%, #8e24aa 100%);
-  color: #fff;
-  box-shadow: 0 4px 24px 0 rgba(30, 34, 90, 0.08);
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-  transition: background 0.3s;
+  padding: 0 1.5rem; /* Reduced padding for a tighter look */
+  background: transparent; /* Transparent background */
+  /* border-bottom: 1.5px solid #e0e0e0; */ /* Removed for full blend */
+  color: #23232a; /* Default text color for light mode */
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+  transition: border-color 0.3s, color 0.3s;
 }
+
+body.dark .header-navbar {
+  /* border-bottom: 1.5px solid #383848; */ /* Removed for full blend */
+  color: #f0f0f0; /* Default text color for dark mode */
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logo-circle {
+  width: 38px; /* Slightly smaller */
+  height: 38px;
+  background: none; /* No background fill */
+  border: 1.5px solid #e52e71; /* Border color */
+  border-radius: 50%; /* Circular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem; /* Adjusted icon size */
+  color: #e52e71; /* Icon color */
+  transition: border-color 0.3s, color 0.3s;
+}
+
+body.dark .logo-circle {
+  border-color: #fff;
+  color: #fff;
+}
+
+.brand-text {
+  font-weight: 700; /* Bold */
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  color: inherit; /* Inherit from .header-navbar */
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem; /* Reduced gap */
+}
+
+/* Removing .choose-version-select as it's not in Header.js and belongs to MessageInput typically */
+
+.new-session-btn {
+  background: none;
+  color: #e52e71;
+  border: 1.5px solid #e52e71;
+  border-radius: 50px; /* Pill shape */
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.18s;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+}
+
+.new-session-btn:hover {
+  background: rgba(229, 46, 113, 0.07);
+  color: #e52e71;
+  transform: scale(1.03);
+}
+
+body.dark .new-session-btn {
+  color: #fff;
+  border-color: #fff;
+}
+
+body.dark .new-session-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.greeting {
+  font-size: 0.9rem;
+  color: inherit; /* Inherit from .header-navbar */
+  margin: 0 0.5rem;
+  font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+}
+
+.theme-toggle-btn {
+  background: none;
+  border: 1.5px solid #23232a;
+  font-size: 1.2rem; /* Adjusted icon size */
+  cursor: pointer;
+  color: #23232a;
+  outline: none;
+  border-radius: 50%;
+  width: 36px; /* Adjusted size */
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s, background 0.18s, color 0.18s, border-color 0.18s;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  background: rgba(35, 35, 42, 0.05);
+}
+
+body.dark .theme-toggle-btn {
+  border-color: #fff;
+  color: #fff;
+}
+
+body.dark .theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header-navbar {
+    padding: 0 1rem;
+    height: 60px;
+  }
+  .brand-text {
+    font-size: 1.2rem;
+  }
+  .logo-circle {
+    width: 34px;
+    height: 34px;
+    font-size: 1.3rem;
+  }
+  .new-session-btn {
+    padding: 0.35rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  .header-actions {
+    gap: 0.5rem;
+  }
+  .theme-toggle-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+  }
+  .greeting.d-md-inline {
+    display: none !important; /* Ensure greeting is hidden on smaller screens if Bootstrap class is used */
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-text {
+    display: none; /* Hide brand text on very small screens, logo is enough */
+  }
+  .greeting {
+    display: none !important;
+  }
+   .new-session-btn span {
+    display: none; /* Show only + icon */
+  }
+  .new-session-btn {
+    padding: 0.4rem;
+    width: 34px; /* Make it square for icon */
+    height: 34px;
+    font-size: 1.2rem; /* Adjust icon size if needed */
+  }
+  .new-session-btn::before {
+    content: '+'; /* Ensure plus is visible */
+    font-weight: 600;
+  }
+}
+
+
 .header-brand {
   display: flex;
   align-items: center;

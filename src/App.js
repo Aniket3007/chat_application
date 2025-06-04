@@ -3,6 +3,7 @@ import { ThemeProvider, ThemeContext } from "./themeContext";
 import Header from "./components/js/Header";
 import ChatWindow from "./components/js/ChatWindow";
 import MessageInput from "./components/js/MessageInput";
+import LandingPage from "./components/js/LandingPage";
 import "./components/css/App.css";
 
 function App() {
@@ -10,7 +11,18 @@ function App() {
     { id: 1, text: "Hello! How can I help you today?", sender: "bot", timestamp: Date.now() },
   ]);
   const [streamingMsg, setStreamingMsg] = useState("");
+  const [chatActive, setChatActive] = useState(false);
   const username = "User"; // Replace with auth logic if needed
+
+  const initialMessages = [
+    { id: 1, text: "Hello! How can I help you today?", sender: "bot", timestamp: Date.now() },
+  ];
+
+  const handleNewSession = () => {
+    setMessages(initialMessages);
+    setStreamingWords([]);
+    setChatActive(false);
+  };
 
   // Feedback handler (can be expanded to store feedback)
   const handleFeedback = (msgId, feedback) => {
@@ -20,6 +32,7 @@ function App() {
 
   // Streaming/scrolling word-by-word bot response
   const handleSendMessage = (text) => {
+    if (!chatActive) setChatActive(true);
     if (!text.trim()) return;
     const now = Date.now();
     const userMsg = {
@@ -67,12 +80,21 @@ function App() {
     <ThemeProvider>
       <ThemeContext.Consumer>
         {({ theme }) => (
-          <div className={`app-container ${theme}`}>
-            <Header username={username} />
-            <div className="chat-main">
-              <ChatWindow messages={messages} streamingWords={streamingWords} onFeedback={handleFeedback} />
-              <MessageInput onSendMessage={handleSendMessage} />
-            </div>
+          <div className={`app-container ${theme} ${!chatActive ? 'layout-landing' : 'layout-chat'}`}>
+            {!chatActive ? (
+              <>
+                <LandingPage showWelcomeMessage={!chatActive} />
+                <MessageInput onSendMessage={handleSendMessage} />
+              </>
+            ) : (
+              <>
+                <Header username={username} onNewSession={handleNewSession} />
+                <div className="chat-main">
+                  <ChatWindow messages={messages} streamingWords={streamingWords} onFeedback={handleFeedback} />
+                  <MessageInput onSendMessage={handleSendMessage} />
+                </div>
+              </>
+            )}
           </div>
         )}
       </ThemeContext.Consumer>
